@@ -1,7 +1,7 @@
 {
 	"manifest_version" : 2,
 	"name": "Add to (Semantic)Scuttle",
-	"version" : "0.1",
+	"version" : "0.2",
 	"description" : "Allow to add bookmarks to (Semantic)Scuttle, a social bookmarking tool experimenting with tags and collaborative tag descriptions.",
 	"homepage_url" : "http://semanticscuttle.sourceforge.net/",
 	"icons" : {
