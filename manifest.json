@@ -7,6 +7,12 @@
 	"icons" : {
 		"48" : "data/icon48.png"
 	},
+	"applications": {
+  	"gecko": {
+    	"id": "add2scuttle@spaceoasis.gotdns.org",
+    	"strict_min_version": "52.0"
+  	}
+	},
 	"options_ui" : {
     "page": "options.html"
   },
