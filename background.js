@@ -14,7 +14,7 @@ function shareURL(){
 
 		var tab = tabs[0];
 
-		var url = instance + "bookmarks.php?action=add&address=" + encodeURIComponent(tab.url) + "&title=" + tabs[0].title;
+		var url = instance + "/bookmarks.php?action=add&address=" + encodeURIComponent(tab.url) + "&title=" + tabs[0].title;
 		widthInt = Number(windowWidth);
 		heightInt = Number(windowHeight);
 
