@@ -29,7 +29,7 @@ function shareURL(){
 					if(changeInfo.url){
 						var new_url
 						new_url = changeInfo.url
-						if(new_url.includes("action=add") == false){
+						if((new_url.includes("action=add") == false) && (new_url.includes("edit.php") == false)){
 							browser.windows.remove(win.id);
 						}
 					}
