@@ -1,0 +1,27 @@
+{
+	"manifest_version" : 2,
+	"name": "Add to (Semantic)Scuttle",
+	"version" : "0.1",
+	"description" : "Allow to add bookmarks to (Semantic)Scuttle, a social bookmarking tool experimenting with tags and collaborative tag descriptions.",
+	"homepage_url" : "http://semanticscuttle.sourceforge.net/",
+	"icons" : {
+		"48" : "data/icon48.png"
+	},
+	"options_ui" : {
+    "page": "options.html"
+  },
+	"permissions" : [
+		"storage",
+		"notifications",
+		"contextMenus",
+		"activeTab",
+		"tabs"],
+	"browser_action" : {
+		"default_title" : "Add to (Semantic)Scuttle",
+		"default_icon" : "data/icon48.png"
+	},
+	"background" : {
+		"scripts" : ["background.js"]
+	}
+
+}
