@@ -13,6 +13,6 @@ Source & support : https://github.com/FrenchHope/Add-to-Semantic-Scuttle-WebExt
 
 ---
 
--The addon icon is published under GNU General Public License version 2.0 (GPLv2) https://sourceforge.net/projects/semanticscuttle/
+-The addon icon is published under GNU General Public License version 2.0 (GPLv2) https://sourceforge.net/projects/semanticscuttle/ https://www.gnu.org/licenses/gpl-2.0.html
 
 -The addon itself is published under MIT License
