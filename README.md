@@ -8,4 +8,5 @@ It needs 3 parameters to work properly:
 - popup window height
 
 Download & Install : https://addons.mozilla.org/fr/developers/addon/add-to-semantic-scuttle
+
 Source & support : https://github.com/FrenchHope/Add-to-Semantic-Scuttle-WebExt
