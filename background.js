@@ -13,8 +13,16 @@ function shareURL(){
 		gettingHeight.then(onGotHeight, onError);
 
 		var tab = tabs[0];
-
-		var url = instance + "/bookmarks.php?action=add&address=" + encodeURIComponent(tab.url) + "&title=" + tabs[0].title;
+		
+		// manages Mozilla Firefox reader mode
+		var rawUrl = tab.url;
+		var partToRemove = partToRemove = "about:reader?url=";
+		if(rawUrl.includes(partToRemove)) {
+		rawUrl = rawUrl.substring(partToRemove.length);
+		rawUrl = decodeURIComponent(rawUrl);
+	  	}
+		
+		var url = instance + "/bookmarks.php?action=add&address=" + encodeURIComponent(rawUrl) + "&title=" + tabs[0].title;
 		widthInt = Number(windowWidth);
 		heightInt = Number(windowHeight);
 
