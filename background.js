@@ -2,11 +2,16 @@ var instance
 var windowWidth
 var windowHeight
 
+// prefs are not loaded once before shareURL it won't work on first click.
+var gettingPrefs = browser.storage.local.get(["instance_url","window_width","window_height"]);
+gettingPrefs.then(onGot,onError);
+
 function shareURL(){
 	browser.tabs.query({active: true},function(tabs){
 
+		// prefs are loaded again when the function is called to manage changes in the options page.
 		let gettingPrefs = browser.storage.local.get(["instance_url","window_width","window_height"]);
-		gettingPrefs.then(onGot, onError);
+		gettingPrefs.then(onGot,onError);
 
 		var tab = tabs[0];
 
