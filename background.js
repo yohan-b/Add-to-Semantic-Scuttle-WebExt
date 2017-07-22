@@ -13,7 +13,7 @@ function shareURL(){
 		gettingHeight.then(onGotHeight, onError);
 
 		var tab = tabs[0];
-		
+
 		// manages Mozilla Firefox reader mode
 		var rawUrl = tab.url;
 		var partToRemove = partToRemove = "about:reader?url=";
@@ -21,8 +21,8 @@ function shareURL(){
 		rawUrl = rawUrl.substring(partToRemove.length);
 		rawUrl = decodeURIComponent(rawUrl);
 	  	}
-		
-		var url = instance + "/bookmarks.php?action=add&address=" + encodeURIComponent(rawUrl) + "&title=" + tabs[0].title;
+
+		var url = instance + "/bookmarks.php?action=add&address=" + encodeURIComponent(rawUrl) + "&title=" + encodeURIComponent(tabs[0].title);
 		widthInt = Number(windowWidth);
 		heightInt = Number(windowHeight);
 
