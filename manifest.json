@@ -1,8 +1,8 @@
 {
 	"manifest_version" : 2,
 	"name": "Add to (Semantic)Scuttle",
-	"version" : "0.3",
-	"description" : "Allows to add bookmarks to (Semantic)Scuttle, a social bookmarking tool experimenting with tags and collaborative tag descriptions.",
+	"version" : "0.4",
+	"description" : "Add bookmarks to a (Semantic)Scuttle instance, a social bookmarking tool experimenting with tags and collaborative tag descriptions.",
 	"homepage_url" : "https://github.com/FrenchHope/Add-to-Semantic-Scuttle-WebExt",
 	"icons" : {
 		"48" : "data/icon48.png"
