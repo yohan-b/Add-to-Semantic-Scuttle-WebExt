@@ -12,11 +12,11 @@ function shareURL(){
 
 		// manages Mozilla Firefox reader mode
 		var rawUrl = tab.url;
-		var partToRemove = partToRemove = "about:reader?url=";
+		var partToRemove = "about:reader?url=";
 		if(rawUrl.includes(partToRemove)) {
 		rawUrl = rawUrl.substring(partToRemove.length);
 		rawUrl = decodeURIComponent(rawUrl);
-	  	}
+	  }
 
 		var url = instance + "/bookmarks.php?action=add&address=" + encodeURIComponent(rawUrl) + "&title=" + encodeURIComponent(tabs[0].title);
 		widthInt = Number(windowWidth);
