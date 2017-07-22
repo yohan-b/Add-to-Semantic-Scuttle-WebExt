@@ -5,12 +5,8 @@ var windowHeight
 function shareURL(){
 	browser.tabs.query({active: true},function(tabs){
 
-		var gettingUrl = browser.storage.local.get("instance_url");
-		gettingUrl.then(onGotUrl, onError);
-		var gettingWidth = browser.storage.local.get("window_width");
-		gettingWidth.then(onGotWidth, onError);
-		var gettingHeight = browser.storage.local.get("window_height");
-		gettingHeight.then(onGotHeight, onError);
+		let gettingPrefs = browser.storage.local.get(["instance_url","window_width","window_height"]);
+		gettingPrefs.then(onGot, onError);
 
 		var tab = tabs[0];
 
@@ -51,22 +47,10 @@ function onError(error) {
   console.log(`Error: ${error}`);
 }
 
-function onGotUrl(item) {
-	if (item.instance_url) {
-	    instance = item.instance_url;
-	  }
-}
-
-function onGotWidth(item) {
-	if (item.window_width) {
-	    windowWidth = item.window_width;
-	  }
-}
-
-function onGotHeight(item) {
-	if (item.window_height) {
-	    windowHeight = item.window_height;
-	  }
+function onGot(item) {
+	instance = item["instance_url"];
+	windowWidth = item["window_width"];
+	windowHeight = item["window_height"];
 }
 
 browser.contextMenus.create({
