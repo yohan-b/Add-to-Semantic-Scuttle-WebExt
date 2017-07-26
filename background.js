@@ -1,16 +1,17 @@
 var instance
 var windowWidth
 var windowHeight
+var noQueryStrings
 
 // prefs are not loaded once before shareURL it won't work on first click.
-var gettingPrefs = browser.storage.local.get(["instance_url","window_width","window_height"]);
+var gettingPrefs = browser.storage.local.get(["instance_url","window_width","window_height","remove_querystrings"]);
 gettingPrefs.then(onGot,onError);
 
 function shareURL(){
 	browser.tabs.query({active: true},function(tabs){
 
 		// prefs are loaded again when the function is called to manage changes in the options page.
-		let gettingPrefs = browser.storage.local.get(["instance_url","window_width","window_height"]);
+		let gettingPrefs = browser.storage.local.get(["instance_url","window_width","window_height","remove_querystrings"]);
 		gettingPrefs.then(onGot,onError);
 
 		var tab = tabs[0];
@@ -22,6 +23,11 @@ function shareURL(){
 		rawUrl = rawUrl.substring(partToRemove.length);
 		rawUrl = decodeURIComponent(rawUrl);
 	  }
+
+		// manages URL query strings
+		if (noQueryStrings == true) {
+			rawUrl = rawUrl.split("?")[0];
+		}
 
 		var url = instance + "/bookmarks.php?action=add&address=" + encodeURIComponent(rawUrl) + "&title=" + encodeURIComponent(tabs[0].title);
 		widthInt = Number(windowWidth);
@@ -56,6 +62,7 @@ function onGot(item) {
 	instance = item["instance_url"];
 	windowWidth = item["window_width"];
 	windowHeight = item["window_height"];
+	noQueryStrings = item["remove_querystrings"];
 }
 
 browser.contextMenus.create({
