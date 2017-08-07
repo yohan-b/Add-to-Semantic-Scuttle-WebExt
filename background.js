@@ -1,18 +1,28 @@
-var instance
-var windowWidth
-var windowHeight
-var noQueryStrings
+var instance;
+var windowWidth;
+var windowHeight;
+var noQueryStrings;
 
-// prefs are not loaded once before shareURL it won't work on first click.
-var gettingPrefs = browser.storage.local.get(["instance_url","window_width","window_height","remove_querystrings"]);
-gettingPrefs.then(onGot,onError);
+function onError(error) {
+  console.log(`Error: ${error}`);
+}
 
-function shareURL(){
+function onGot(item) {
+	instance = item["instance_url"];
+	windowWidth = item["window_width"];
+	windowHeight = item["window_height"];
+	noQueryStrings = item["remove_querystrings"];
+}
+
+function shareURL(donnees){
 	browser.tabs.query({active: true},function(tabs){
 
-		// prefs are loaded again when the function is called to manage changes in the options page.
-		let gettingPrefs = browser.storage.local.get(["instance_url","window_width","window_height","remove_querystrings"]);
-		gettingPrefs.then(onGot,onError);
+		browser.storage.local.get(["instance_url","window_width","window_height","remove_querystrings"],function(item){
+
+		instance = item["instance_url"];
+		windowWidth = item["window_width"];
+		windowHeight = item["window_height"];
+		noQueryStrings = item["remove_querystrings"];
 
 		var tab = tabs[0];
 
@@ -29,7 +39,7 @@ function shareURL(){
 			rawUrl = rawUrl.split("?")[0];
 		}
 
-		var url = instance + "/bookmarks.php?action=add&address=" + encodeURIComponent(rawUrl) + "&title=" + encodeURIComponent(tabs[0].title);
+		var url = instance + "/bookmarks.php?action=add&address=" + encodeURIComponent(rawUrl) + "&title=" + encodeURIComponent(tabs[0].title) + "&description=" + encodeURIComponent(donnees);
 		widthInt = Number(windowWidth);
 		heightInt = Number(windowHeight);
 
@@ -52,17 +62,7 @@ function shareURL(){
 			});
 		});
 	});
-}
-
-function onError(error) {
-  console.log(`Error: ${error}`);
-}
-
-function onGot(item) {
-	instance = item["instance_url"];
-	windowWidth = item["window_width"];
-	windowHeight = item["window_height"];
-	noQueryStrings = item["remove_querystrings"];
+});
 }
 
 browser.contextMenus.create({
@@ -74,6 +74,8 @@ browser.contextMenus.create({
 	contexts: ["all"]
 });
 
-browser.browserAction.onClicked.addListener(() => {
-	shareURL();
+browser.browserAction.onClicked.addListener((tab) => {
+	browser.tabs.sendMessage(tab.id, {method: "getSelection"}).then(response => {
+	shareURL(response.response);
+  }).catch(onError);
 });
