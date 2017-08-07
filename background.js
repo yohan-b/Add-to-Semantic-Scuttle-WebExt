@@ -1,8 +1,3 @@
-var instance;
-var windowWidth;
-var windowHeight;
-var noQueryStrings;
-
 function onError(error) {
   console.log(`Error: ${error}`);
 }
@@ -19,16 +14,16 @@ function shareURL(donnees){
 
 		browser.storage.local.get(["instance_url","window_width","window_height","remove_querystrings"],function(item){
 
-		instance = item["instance_url"];
-		windowWidth = item["window_width"];
-		windowHeight = item["window_height"];
-		noQueryStrings = item["remove_querystrings"];
+		let instance = item["instance_url"];
+		let windowWidth = item["window_width"];
+		let windowHeight = item["window_height"];
+		let noQueryStrings = item["remove_querystrings"];
 
-		var tab = tabs[0];
+		let tab = tabs[0];
 
 		// manages Mozilla Firefox reader mode
-		var rawUrl = tab.url;
-		var partToRemove = "about:reader?url=";
+		let rawUrl = tab.url;
+		let partToRemove = "about:reader?url=";
 		if(rawUrl.includes(partToRemove)) {
 		rawUrl = rawUrl.substring(partToRemove.length);
 		rawUrl = decodeURIComponent(rawUrl);
@@ -39,7 +34,7 @@ function shareURL(donnees){
 			rawUrl = rawUrl.split("?")[0];
 		}
 
-		var url = instance + "/bookmarks.php?action=add&address=" + encodeURIComponent(rawUrl) + "&title=" + encodeURIComponent(tabs[0].title) + "&description=" + encodeURIComponent(donnees);
+		let url = instance + "/bookmarks.php?action=add&address=" + encodeURIComponent(rawUrl) + "&title=" + encodeURIComponent(tabs[0].title) + "&description=" + encodeURIComponent(donnees);
 		widthInt = Number(windowWidth);
 		heightInt = Number(windowHeight);
 
