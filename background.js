@@ -2,28 +2,18 @@ function onError(error) {
   console.log(`Error: ${error}`);
 }
 
-function onGot(item) {
-	instance = item["instance_url"];
-	windowWidth = item["window_width"];
-	windowHeight = item["window_height"];
-	noQueryStrings = item["remove_querystrings"];
-}
-
-function shareURL(donnees){
-	browser.tabs.query({active: true},function(tabs){
+function shareURL(selectionContent,currentTab){
 
 		browser.storage.local.get(["instance_url","window_width","window_height","remove_querystrings"],function(item){
 
-		let instance = item["instance_url"];
-		let windowWidth = item["window_width"];
-		let windowHeight = item["window_height"];
-		let noQueryStrings = item["remove_querystrings"];
-
-		let tab = tabs[0];
+		instance = item["instance_url"];
+		windowWidth = item["window_width"];
+		windowHeight = item["window_height"];
+		noQueryStrings = item["remove_querystrings"];
 
 		// manages Mozilla Firefox reader mode
-		let rawUrl = tab.url;
-		let partToRemove = "about:reader?url=";
+		var rawUrl = currentTab.url;
+		var partToRemove = "about:reader?url=";
 		if(rawUrl.includes(partToRemove)) {
 		rawUrl = rawUrl.substring(partToRemove.length);
 		rawUrl = decodeURIComponent(rawUrl);
@@ -34,7 +24,7 @@ function shareURL(donnees){
 			rawUrl = rawUrl.split("?")[0];
 		}
 
-		let url = instance + "/bookmarks.php?action=add&address=" + encodeURIComponent(rawUrl) + "&title=" + encodeURIComponent(tabs[0].title) + "&description=" + encodeURIComponent(donnees);
+		var url = instance + "/bookmarks.php?action=add&address=" + encodeURIComponent(rawUrl) + "&title=" + encodeURIComponent(currentTab.title) + "&description=" + encodeURIComponent(selectionContent);
 		widthInt = Number(windowWidth);
 		heightInt = Number(windowHeight);
 
@@ -57,20 +47,24 @@ function shareURL(donnees){
 			});
 		});
 	});
-});
 }
 
 browser.contextMenus.create({
 	id: "semantic-scuttle",
 	title: "Add to (Semantic)Scuttle",
 	onclick: function(){
-		shareURL();
+    browser.tabs.query({ currentWindow: true, active: true }, function(tabs) {
+      tab = tabs[0];
+    browser.tabs.sendMessage(tab.id, {method: "getSelection"}).then(response => {
+  	shareURL(response.response,tab);
+    }).catch(onError);
+  });
 	},
 	contexts: ["all"]
 });
 
 browser.browserAction.onClicked.addListener((tab) => {
 	browser.tabs.sendMessage(tab.id, {method: "getSelection"}).then(response => {
-	shareURL(response.response);
+	shareURL(response.response,tab);
   }).catch(onError);
 });
