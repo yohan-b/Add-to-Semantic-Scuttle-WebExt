@@ -55,16 +55,28 @@ browser.contextMenus.create({
 	onclick: function(){
     browser.tabs.query({ currentWindow: true, active: true }, function(tabs) {
       tab = tabs[0];
+      if(tab.url.includes("about:") == true){
+        shareURL("",tab);
+      }
+      else
+      {
     browser.tabs.sendMessage(tab.id, {method: "getSelection"}).then(response => {
   	shareURL(response.response,tab);
     }).catch(onError);
+    }
   });
 	},
 	contexts: ["all"]
 });
 
 browser.browserAction.onClicked.addListener((tab) => {
+  if(tab.url.includes("about:") == true){
+    shareURL("",tab);
+  }
+  else
+  {
 	browser.tabs.sendMessage(tab.id, {method: "getSelection"}).then(response => {
 	shareURL(response.response,tab);
   }).catch(onError);
+  }
 });
