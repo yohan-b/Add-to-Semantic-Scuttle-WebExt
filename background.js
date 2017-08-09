@@ -70,12 +70,12 @@ browser.contextMenus.create({
 });
 
 browser.browserAction.onClicked.addListener((tab) => {
-  if(tab.url.includes("about:reader?url=") == true){
+  if((tab.url.includes("about:reader?url=") == true) || (tab.url.includes("https://addons.mozilla.org/") == true)){
     shareURL("",tab);
   }
   else
   {
-	if((tab.url.includes("about:reader?url=") == true) || (tab.url.includes("https://addons.mozilla.org/") == true)){
+  browser.tabs.sendMessage(tab.id, {method: "getSelection"}).then(response => {
 	shareURL(response.response,tab);
   }).catch(onError);
   }
