@@ -55,7 +55,7 @@ browser.contextMenus.create({
 	onclick: function(){
     browser.tabs.query({ currentWindow: true, active: true }, function(tabs) {
       tab = tabs[0];
-      if(tab.url.includes("about:") == true){
+      if(tab.url.includes("about:reader?url=") == true){
         shareURL("",tab);
       }
       else
@@ -70,7 +70,7 @@ browser.contextMenus.create({
 });
 
 browser.browserAction.onClicked.addListener((tab) => {
-  if(tab.url.includes("about:") == true){
+  if(tab.url.includes("about:reader?url=") == true){
     shareURL("",tab);
   }
   else
