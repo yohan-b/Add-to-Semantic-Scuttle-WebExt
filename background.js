@@ -55,7 +55,7 @@ browser.contextMenus.create({
 	onclick: function(){
     browser.tabs.query({ currentWindow: true, active: true }, function(tabs) {
       tab = tabs[0];
-      if(tab.url.includes("about:reader?url=") == true){
+      if((tab.url.includes("about:reader?url=") == true) || (tab.url.includes("https://addons.mozilla.org/") == true)){
         shareURL("",tab);
       }
       else
@@ -75,7 +75,7 @@ browser.browserAction.onClicked.addListener((tab) => {
   }
   else
   {
-	browser.tabs.sendMessage(tab.id, {method: "getSelection"}).then(response => {
+	if((tab.url.includes("about:reader?url=") == true) || (tab.url.includes("https://addons.mozilla.org/") == true)){
 	shareURL(response.response,tab);
   }).catch(onError);
   }
