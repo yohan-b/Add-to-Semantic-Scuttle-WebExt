@@ -4,12 +4,13 @@ function onError(error) {
 
 function shareURL(selectionContent,currentTab){
 
-		browser.storage.local.get(["instance_url","window_width","window_height","remove_querystrings"],function(item){
+		browser.storage.local.get(["instance_url","window_width","window_height","remove_querystrings","exceptUrlList"],function(item){
 
 		instance = item["instance_url"];
 		windowWidth = item["window_width"];
 		windowHeight = item["window_height"];
 		noQueryStrings = item["remove_querystrings"];
+    exceptUrlList = item["exceptUrlList"];
 
 		// manages Mozilla Firefox reader mode
 		var rawUrl = currentTab.url;
@@ -21,7 +22,14 @@ function shareURL(selectionContent,currentTab){
 
 		// manages URL query strings
 		if (noQueryStrings == true) {
-			rawUrl = rawUrl.split("?")[0];
+      var flagRemove = true;
+      var urlList = exceptUrlList.split(/,\s*/);
+      urlList.forEach(function(baseUrl) {
+        if (rawUrl.startsWith(baseUrl)) {
+          flagRemove = false
+        }
+      });
+      if (flagRemove) {rawUrl = rawUrl.split("?")[0];}
 		}
 
 		var url = instance + "/bookmarks.php?action=add&address=" + encodeURIComponent(rawUrl) + "&title=" + encodeURIComponent(currentTab.title) + "&description=" + encodeURIComponent(selectionContent);

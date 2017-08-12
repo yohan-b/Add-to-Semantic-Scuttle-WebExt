@@ -4,7 +4,8 @@ function saveOptions(e) {
     instance_url: document.querySelector("#instance_url").value ,
     window_width: document.querySelector("#window_width").value ,
     window_height: document.querySelector("#window_height").value,
-    remove_querystrings: document.querySelector("#remove_querystrings").checked
+    remove_querystrings: document.querySelector("#remove_querystrings").checked,
+    exceptUrlList: document.querySelector("#exceptUrlList").value
   });
 }
 
@@ -15,13 +16,14 @@ function restoreOptions() {
     document.querySelector("#window_width").value = result["window_width"] || "640";
     document.querySelector("#window_height").value = result["window_height"] || "480";
     document.querySelector("#remove_querystrings").checked = result["remove_querystrings"] || false;
+    document.querySelector("#exceptUrlList").value = result["exceptUrlList"] || "https://www.google.fr,https://www.youtube.com,http://lalist.inist.fr,https://www.qwant.com";
   }
 
   function onError(error) {
     console.log(`Error: ${error}`);
   }
 
-  var getting = browser.storage.local.get(["instance_url","window_width","window_height","remove_querystrings"]);
+  var getting = browser.storage.local.get(["instance_url","window_width","window_height","remove_querystrings","exceptUrlList"]);
   getting.then(setCurrentChoices, onError);
 
 }

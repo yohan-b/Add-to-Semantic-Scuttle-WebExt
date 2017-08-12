@@ -39,9 +39,9 @@
 	"commands": {
   "_execute_browser_action": {
     "suggested_key": {
-      "default": "Alt+Shift+S"
+			"default": "Alt+Shift+S"
     },
-    "description": "dd to (Semantic)Scuttle keyboard shortcut"
+    "description": "Add to (Semantic)Scuttle keyboard shortcut"
   }
 }
 }
