@@ -77,6 +77,18 @@ browser.contextMenus.create({
 	contexts: ["all"]
 });
 
+browser.contextMenus.create({
+	id: "my-scuttle",
+	title: "My (Semantic)Scuttle",
+	onclick: function(){
+    browser.storage.local.get(["instance_url","username"],function(item){
+      myurl = item["instance_url"] + "/bookmarks.php/" + item["username"];
+      var creating = browser.tabs.create({url: myurl});
+    })
+	},
+	contexts: ["all"]
+});
+
 browser.browserAction.onClicked.addListener((tab) => {
   if((tab.url.includes("about:reader?url=") == true) || (tab.url.includes("https://addons.mozilla.org/") == true)){
     shareURL("",tab);
