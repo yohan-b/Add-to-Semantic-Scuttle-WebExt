@@ -3,6 +3,7 @@ function saveOptions(e) {
   browser.storage.local.set({
     instance_url: document.querySelector("#instance_url").value ,
     username: document.querySelector("#username").value ,
+    password: document.querySelector("#password").value ,
     window_width: document.querySelector("#window_width").value ,
     window_height: document.querySelector("#window_height").value,
     remove_querystrings: document.querySelector("#remove_querystrings").checked,
@@ -15,6 +16,7 @@ function restoreOptions() {
   function setCurrentChoices(result) {
     document.querySelector("#instance_url").value = result["instance_url"] || "http://semanticscuttle.sourceforge.net/";
     document.querySelector("#username").value = result["username"] || "Me";
+    document.querySelector("#password").value = result["password"] || "Password";
     document.querySelector("#window_width").value = result["window_width"] || "640";
     document.querySelector("#window_height").value = result["window_height"] || "480";
     document.querySelector("#remove_querystrings").checked = result["remove_querystrings"] || false;
